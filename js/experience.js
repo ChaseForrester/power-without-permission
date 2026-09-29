@@ -25,6 +25,56 @@
     }
   }
 
+  var markStory = document.querySelector(".mark-story");
+  if (markStory) {
+    var markWords = [];
+    markStory.querySelectorAll("p").forEach(function (para) {
+      var pieces = para.textContent.trim().split(/\s+/);
+      para.textContent = "";
+      pieces.forEach(function (piece, index) {
+        var span = document.createElement("span");
+        span.className = "mark-word";
+        span.textContent = piece;
+        if (index < pieces.length - 1) span.appendChild(document.createTextNode(" "));
+        para.appendChild(span);
+        markWords.push(span);
+      });
+    });
+
+    var reduceMarks = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var markQueued = false;
+
+    function paintMarks() {
+      markQueued = false;
+      if (reduceMarks.matches) {
+        markWords.forEach(function (word) { word.classList.add("is-lit"); });
+        return;
+      }
+      var edge = Math.max(150, Math.min(window.innerHeight * 0.58, window.innerHeight - 96));
+      markWords.forEach(function (word) {
+        var box = word.getBoundingClientRect();
+        var lit = word.classList.contains("is-lit");
+        if (!lit && box.top < edge) {
+          word.style.transitionDelay = Math.max(0, Math.min(box.left, 640)) / 2600 + "s";
+          word.classList.add("is-lit");
+        } else if (lit && box.top > edge + 64) {
+          word.style.transitionDelay = "0s";
+          word.classList.remove("is-lit");
+        }
+      });
+    }
+
+    function queueMarks() {
+      if (markQueued) return;
+      markQueued = true;
+      requestAnimationFrame(paintMarks);
+    }
+
+    paintMarks();
+    window.addEventListener("scroll", queueMarks, { passive: true });
+    window.addEventListener("resize", queueMarks);
+  }
+
   var navLinks = Array.prototype.slice.call(
     document.querySelectorAll(".nav-links a[href^='#']:not(.nav-cta)")
   );

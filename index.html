@@ -515,6 +515,28 @@
       margin: 0 0 16px;
     }
 
+    .mark-story p {
+      font-size: 18.5px;
+      line-height: 2.05;
+      color: rgba(33, 16, 25, 0.8);
+    }
+
+    .mark-word {
+      background-image: linear-gradient(#f48cbf, #f48cbf);
+      background-repeat: no-repeat;
+      background-position: 0 0.42em;
+      background-size: 0% 1.05em;
+      border-radius: 0.12em;
+      transition: background-size .5s ease, font-weight .3s ease, font-size .3s ease, color .3s ease;
+    }
+
+    .mark-word.is-lit {
+      background-size: 100% 1.05em;
+      font-weight: 700;
+      font-size: 1.08em;
+      color: #211019;
+    }
+
     .stat-row {
       display: flex;
       gap: 16px;
@@ -2653,18 +2675,24 @@
           <div class="stamp-label" style="color:var(--stamp-red); margin-bottom:24px;">[ THE MANIFESTO ]</div>
           <blockquote>"I stopped waiting to be picked. So did every client who's hit their first 10K month with me."
           </blockquote>
-          <p>My journey started in network marketing, as a mum who just needed to build an income for my son, who has a
-            disability. There was no five-year plan — I simply needed to find a way to provide for him, on my own terms,
-            without waiting for someone to hand me permission to do it.</p>
-          <p>That need turned into a business, and that business turned into a personal brand. Along the way I've grown
-            into a law student, a speaker, and the owner and host of my own podcast — not because I followed a
-            traditional path, but because I built the one that actually worked for my life.</p>
-          <p>I'm also a survivor of sexual assault. That experience is part of why I built what I've built — I know what
-            it feels like to have power taken from you, and I know what it takes to claim it back. It's shaped how I
-            show up as a coach, a speaker, and an advocate for people rebuilding on their own terms.</p>
-          <p>Power Without Permission is that philosophy in one line: you don't need the perfect qualification, the
-            perfect timing, or someone else's approval to start. You need to move. That's what I help my clients do —
-            turn what they already have into consistent, unstoppable growth.</p>
+          <div class="mark-story">
+            <p>My journey started in network marketing, as a mum who just needed to build an income for my son, who has
+              a
+              disability. There was no five-year plan — I simply needed to find a way to provide for him, on my own
+              terms,
+              without waiting for someone to hand me permission to do it.</p>
+            <p>That need turned into a business, and that business turned into a personal brand. Along the way I've
+              grown
+              into a law student, a speaker, and the owner and host of my own podcast — not because I followed a
+              traditional path, but because I built the one that actually worked for my life.</p>
+            <p>I'm also a survivor of sexual assault. That experience is part of why I built what I've built — I know
+              what
+              it feels like to have power taken from you, and I know what it takes to claim it back. It's shaped how I
+              show up as a coach, a speaker, and an advocate for people rebuilding on their own terms.</p>
+            <p>Power Without Permission is that philosophy in one line: you don't need the perfect qualification, the
+              perfect timing, or someone else's approval to start. You need to move. That's what I help my clients do —
+              turn what they already have into consistent, unstoppable growth.</p>
+          </div>
           <div class="stat-row" id="statRow">
             <div class="stat-box"><span class="num">3</span><span class="lbl">Mentorship paths</span></div>
             <div class="stat-box"><span class="num">24hr</span><span class="lbl">Reply window</span></div>
