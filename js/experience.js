@@ -27,7 +27,6 @@
 
   var markStory = document.querySelector(".mark-story");
   if (markStory) {
-    var markWords = [];
     markStory.querySelectorAll("p").forEach(function (para) {
       var pieces = para.textContent.trim().split(/\s+/);
       para.textContent = "";
@@ -35,44 +34,108 @@
         var span = document.createElement("span");
         span.className = "mark-word";
         span.textContent = piece;
-        if (index < pieces.length - 1) span.appendChild(document.createTextNode(" "));
         para.appendChild(span);
-        markWords.push(span);
+        if (index < pieces.length - 1) para.appendChild(document.createTextNode(" "));
       });
     });
 
     var reduceMarks = window.matchMedia("(prefers-reduced-motion: reduce)");
-    var markQueued = false;
+    var markLines = [];
+    var markIndex = 0;
+    var markTimer = 0;
+    var markPlaying = false;
 
-    function paintMarks() {
-      markQueued = false;
-      if (reduceMarks.matches) {
-        markWords.forEach(function (word) { word.classList.add("is-lit"); });
-        return;
-      }
-      var edge = Math.max(150, Math.min(window.innerHeight * 0.58, window.innerHeight - 96));
-      markWords.forEach(function (word) {
-        var box = word.getBoundingClientRect();
-        var lit = word.classList.contains("is-lit");
-        if (!lit && box.top < edge) {
-          word.style.transitionDelay = Math.max(0, Math.min(box.left, 640)) / 2600 + "s";
-          word.classList.add("is-lit");
-        } else if (lit && box.top > edge + 64) {
-          word.style.transitionDelay = "0s";
-          word.classList.remove("is-lit");
+    function clearBars() {
+      markStory.querySelectorAll(".mark-bar").forEach(function (bar) { bar.remove(); });
+      markLines = [];
+    }
+
+    function buildLines() {
+      clearBars();
+      var words = Array.prototype.slice.call(markStory.querySelectorAll(".mark-word"));
+      var groups = [];
+      var current = [];
+      var lastTop = null;
+      words.forEach(function (word) {
+        var top = word.getBoundingClientRect().top;
+        if (lastTop === null || Math.abs(top - lastTop) > 6) {
+          if (current.length) groups.push(current);
+          current = [word];
+        } else {
+          current.push(word);
         }
+        lastTop = top;
+      });
+      if (current.length) groups.push(current);
+
+      var storyBox = markStory.getBoundingClientRect();
+      markLines = groups.map(function (group) {
+        var first = group[0].getBoundingClientRect();
+        var last = group[group.length - 1].getBoundingClientRect();
+        var bar = document.createElement("span");
+        bar.className = "mark-bar";
+        bar.setAttribute("aria-hidden", "true");
+        var barHeight = Math.max(18, Math.min(first.height * 0.62, 26));
+        bar.style.top = (first.top - storyBox.top + (first.height - barHeight) / 2) + "px";
+        bar.style.left = (first.left - storyBox.left) + "px";
+        bar.style.width = Math.max(8, last.right - first.left) + "px";
+        bar.style.height = barHeight + "px";
+        var chars = group.reduce(function (total, word) { return total + word.textContent.length; }, 0) + Math.max(0, group.length - 1);
+        markStory.appendChild(bar);
+        return { bar: bar, words: group, chars: chars };
       });
     }
 
-    function queueMarks() {
-      if (markQueued) return;
-      markQueued = true;
-      requestAnimationFrame(paintMarks);
+    function showAllLines() {
+      buildLines();
+      markLines.forEach(function (line) {
+        line.bar.style.transition = "none";
+        line.bar.classList.add("is-lit");
+        line.words.forEach(function (word) { word.classList.add("is-lit"); });
+      });
+      markIndex = markLines.length;
     }
 
-    paintMarks();
-    window.addEventListener("scroll", queueMarks, { passive: true });
-    window.addEventListener("resize", queueMarks);
+    function readNextLine() {
+      if (markIndex >= markLines.length) {
+        markPlaying = false;
+        return;
+      }
+      var line = markLines[markIndex];
+      var duration = Math.round(Math.max(1100, line.chars * 82));
+      markIndex += 1;
+      line.bar.style.transitionDuration = duration + "ms";
+      line.words.forEach(function (word) { word.classList.add("is-lit"); });
+      void line.bar.offsetWidth;
+      line.bar.classList.add("is-lit");
+      markTimer = window.setTimeout(readNextLine, duration + 380);
+    }
+
+    function startReading() {
+      if (markPlaying) return;
+      if (!markLines.length) buildLines();
+      if (!markLines.length || markIndex >= markLines.length) return;
+      markPlaying = true;
+      readNextLine();
+    }
+
+    function watchReading() {
+      if (reduceMarks.matches || (markLines.length && markIndex >= markLines.length)) return;
+      var box = markStory.getBoundingClientRect();
+      if (box.top < window.innerHeight * 0.8 && box.bottom > 100) startReading();
+    }
+
+    if (reduceMarks.matches) {
+      showAllLines();
+    } else {
+      window.addEventListener("scroll", watchReading, { passive: true });
+      window.addEventListener("resize", function () {
+        if (markPlaying || markIndex > 0) return;
+        clearBars();
+      });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(watchReading);
+      else watchReading();
+    }
   }
 
   var navLinks = Array.prototype.slice.call(

@@ -515,26 +515,40 @@
       margin: 0 0 16px;
     }
 
+    .mark-story {
+      position: relative;
+    }
+
     .mark-story p {
-      font-size: 18.5px;
-      line-height: 2.05;
-      color: rgba(33, 16, 25, 0.8);
+      font-size: 19px;
+      line-height: 2.15;
+      font-weight: 700;
+      color: rgba(33, 16, 25, 0.72);
     }
 
     .mark-word {
-      background-image: linear-gradient(#f48cbf, #f48cbf);
-      background-repeat: no-repeat;
-      background-position: 0 0.42em;
-      background-size: 0% 1.05em;
-      border-radius: 0.12em;
-      transition: background-size .5s ease, font-weight .3s ease, font-size .3s ease, color .3s ease;
+      position: relative;
+      z-index: 1;
     }
 
     .mark-word.is-lit {
-      background-size: 100% 1.05em;
-      font-weight: 700;
-      font-size: 1.08em;
       color: #211019;
+    }
+
+    .mark-bar {
+      position: absolute;
+      z-index: 0;
+      background: #f48cbf;
+      border-radius: 0.16em;
+      transform: scaleX(0);
+      transform-origin: left center;
+      pointer-events: none;
+      transition-property: transform;
+      transition-timing-function: linear;
+    }
+
+    .mark-bar.is-lit {
+      transform: scaleX(1);
     }
 
     .stat-row {
