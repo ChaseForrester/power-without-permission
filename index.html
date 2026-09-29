@@ -57,6 +57,10 @@
       box-sizing: border-box;
     }
 
+    [hidden] {
+      display: none !important;
+    }
+
     html {
       scroll-behavior: smooth;
     }
@@ -643,15 +647,190 @@
       letter-spacing: 0.05em;
       border: 1px solid var(--line);
       border-radius: 20px;
-      padding: 9px 18px;
+      padding: 9px 16px;
       text-decoration: none;
       color: var(--bone);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       transition: border-color .2s, background .2s;
     }
 
     .platform-pill:hover {
       border-color: var(--stamp-red);
       background: rgba(194, 31, 52, 0.1);
+    }
+
+    .platform-mark {
+      width: 16px;
+      height: 16px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .platform-icon {
+      width: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--bone);
+      text-decoration: none;
+      transition: border-color .2s, transform .2s;
+    }
+
+    .platform-icon .platform-mark {
+      width: 18px;
+      height: 18px;
+    }
+
+    .platform-icon:hover {
+      border-color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    .platform-pill:focus-visible,
+    .platform-icon:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .platform-pill[data-social="spotify"] .platform-mark,
+    .platform-icon[data-social="spotify"] {
+      color: #1ed760;
+    }
+
+    .platform-pill[data-social="youtube"] .platform-mark,
+    .platform-icon[data-social="youtube"] {
+      color: #ff4e45;
+    }
+
+    .platform-pill[data-social="instagram"] .platform-mark,
+    .platform-pill[data-social="instagramPodcast"] .platform-mark,
+    .platform-icon[data-social="instagram"],
+    .platform-icon[data-social="instagramPodcast"] {
+      color: #f0b7d4;
+    }
+
+    .platform-icon[data-social="instagramPodcast"] {
+      border-color: var(--gold);
+    }
+
+    .platform-pill[data-social="facebook"] .platform-mark,
+    .platform-icon[data-social="facebook"] {
+      color: #8eb6ff;
+    }
+
+    .platform-pill[data-social="tiktok"] .platform-mark,
+    .platform-icon[data-social="tiktok"] {
+      color: #7ee7e7;
+    }
+
+    .platform-pill[data-social="apple"] .platform-mark,
+    .platform-icon[data-social="apple"] {
+      color: var(--bone);
+    }
+
+    .platform-pill[data-social="linkedin"] .platform-mark,
+    .platform-icon[data-social="linkedin"] {
+      color: #9ec0ee;
+    }
+
+    .hero-platforms {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 12px;
+      margin-top: 22px;
+    }
+
+    .platform-kicker {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: .6;
+      margin-right: 4px;
+    }
+
+    .hero-platform-row,
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      min-width: 0;
+    }
+
+    .hero-platform-row {
+      flex: 1 1 200px;
+    }
+
+    .listen-row .lbl-split {
+      margin-left: 12px;
+    }
+
+    .platform-sprite {
+      position: absolute;
+      width: 0;
+      height: 0;
+      overflow: hidden;
+    }
+
+    .ig-feed {
+      margin-top: 64px;
+    }
+
+    .ig-lead {
+      max-width: 42rem;
+      margin: 0 0 22px;
+      line-height: 1.6;
+    }
+
+    .ig-lead a {
+      color: var(--gold);
+    }
+
+    .ig-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .ig-frame {
+      width: 100%;
+      min-width: 0;
+      height: 560px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    @media (max-width: 1100px) {
+      .ig-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 12px;
+        padding-bottom: 8px;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .ig-frame {
+        flex: 0 0 min(420px, 86%);
+        scroll-snap-align: start;
+        height: 520px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .listen-row .lbl-split {
+        margin-left: 0;
+      }
     }
 
     /* ---------- Guest Gallery ---------- */
@@ -1218,25 +1397,11 @@
       gap: 18px;
       font-family: 'Space Mono', monospace;
       font-size: 12px;
+    }
+
+    .footer-row>span,
+    .footer-row .copy-link {
       opacity: .6;
-    }
-
-    .social-links {
-      display: flex;
-      gap: 18px;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .social-links a {
-      text-decoration: none;
-      opacity: .85;
-    }
-
-    .social-links a:hover {
-      color: var(--stamp-red);
-      opacity: 1;
     }
 
     ::selection {
@@ -2401,6 +2566,40 @@
 
 <body>
 
+  <svg class="platform-sprite" aria-hidden="true" focusable="false">
+    <symbol id="mark-spotify" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9.2" fill="none" stroke="currentColor" stroke-width="1.7" />
+      <path d="M7.2 9.8c3.1-1 6.5-.7 9.3.9M7.6 12.7c2.5-.7 5.1-.5 7.4.7M8.1 15.4c1.9-.5 3.8-.3 5.5.5" fill="none"
+        stroke="currentColor" stroke-width="1.45" stroke-linecap="round" />
+    </symbol>
+    <symbol id="mark-youtube" viewBox="0 0 24 24">
+      <rect x="2.2" y="5.4" width="19.6" height="13.2" rx="3.2" fill="currentColor" />
+      <path d="M10.3 9.15v5.7l4.9-2.85z" fill="#0a0908" />
+    </symbol>
+    <symbol id="mark-instagram" viewBox="0 0 24 24">
+      <rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" fill="none" stroke="currentColor" stroke-width="1.7" />
+      <circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.7" />
+      <circle cx="17.15" cy="6.85" r="1.05" fill="currentColor" />
+    </symbol>
+    <symbol id="mark-facebook" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M9.2 4.8h7.2v2.4h-4.6v2.6h4.2v2.4h-4.2V19.2H9.2V4.8z" />
+    </symbol>
+    <symbol id="mark-tiktok" viewBox="0 0 24 24">
+      <path fill="currentColor"
+        d="M13.2 3.8v9.2a3.5 3.5 0 1 1-2.3-3.3v2.35a1.25 1.25 0 1 0 .7 1.12V6.05c1.15.72 2.15 1.05 3.4 1.05V4.85c-.75 0-1.4-.25-1.8-.7V3.8z" />
+    </symbol>
+    <symbol id="mark-apple" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="2" fill="currentColor" />
+      <path d="M8.5 8.6a4.9 4.9 0 0 1 7 0M6.4 6.5a8 8 0 0 1 11.2 0M8.5 15.4a4.9 4.9 0 0 0 7 0M6.4 17.5a8 8 0 0 0 11.2 0"
+        fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+    </symbol>
+    <symbol id="mark-linkedin" viewBox="0 0 24 24">
+      <rect x="3.3" y="3.3" width="17.4" height="17.4" rx="2.2" fill="none" stroke="currentColor" stroke-width="1.6" />
+      <path fill="currentColor"
+        d="M8 10.3H6.3V17H8v-6.7zM7.15 6.7a1.05 1.05 0 1 0 0 2.1 1.05 1.05 0 0 0 0-2.1zM17.7 17v-3.55c0-1.9-1-2.75-2.3-2.75-1.05 0-1.65.58-1.95.95v-1.35H11.7V17h1.75v-3.6c0-.22.02-.45.1-.6.18-.42.58-.86 1.25-.86.88 0 1.23.67 1.23 1.65V17H17.7z" />
+    </symbol>
+  </svg>
+
   <a class="skip" href="#top">Skip to content</a>
   <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
   <button type="button" class="nav-backdrop" id="navBackdrop" aria-label="Close menu" hidden></button>
@@ -2472,6 +2671,50 @@
           <div class="btn-row">
             <a href="#work-with-me" class="btn btn-solid">Work With Me →</a>
             <a href="#podcast" class="btn btn-ghost">Listen to the Podcast</a>
+          </div>
+          <div class="hero-platforms">
+            <span class="platform-kicker">Listen &amp; follow</span>
+            <div class="hero-platform-row">
+              <a class="platform-icon" data-social="spotify" href="https://open.spotify.com/show/6zEBd39ZLkv2Br01n4gZGZ"
+                target="_blank" rel="noopener" aria-label="Spotify"><svg class="platform-mark" viewBox="0 0 24 24"
+                  aria-hidden="true">
+                  <use href="#mark-spotify" />
+                </svg></a>
+              <a class="platform-icon" data-social="youtube" href="https://www.youtube.com/@PowerWithoutPermission"
+                target="_blank" rel="noopener" aria-label="YouTube"><svg class="platform-mark" viewBox="0 0 24 24"
+                  aria-hidden="true">
+                  <use href="#mark-youtube" />
+                </svg></a>
+              <a class="platform-icon" data-social="apple" href="" target="_blank" rel="noopener"
+                aria-label="Apple Podcasts" hidden><svg class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+                  <use href="#mark-apple" />
+                </svg></a>
+              <a class="platform-icon" data-social="instagram" href="https://www.instagram.com/siobhanfredaodonnell/"
+                target="_blank" rel="noopener" aria-label="Instagram"><svg class="platform-mark" viewBox="0 0 24 24"
+                  aria-hidden="true">
+                  <use href="#mark-instagram" />
+                </svg></a>
+              <a class="platform-icon" data-social="instagramPodcast"
+                href="https://www.instagram.com/siobhanspodcast_pwp/" target="_blank" rel="noopener"
+                aria-label="Podcast on Instagram" title="The podcast on Instagram"><svg class="platform-mark"
+                  viewBox="0 0 24 24" aria-hidden="true">
+                  <use href="#mark-instagram" />
+                </svg></a>
+              <a class="platform-icon" data-social="facebook" href="https://www.facebook.com/siobhan.odonnell3/"
+                target="_blank" rel="noopener" aria-label="Facebook"><svg class="platform-mark" viewBox="0 0 24 24"
+                  aria-hidden="true">
+                  <use href="#mark-facebook" />
+                </svg></a>
+              <a class="platform-icon" data-social="tiktok" href="https://www.tiktok.com/@siobhanfredaodonn"
+                target="_blank" rel="noopener" aria-label="TikTok"><svg class="platform-mark" viewBox="0 0 24 24"
+                  aria-hidden="true">
+                  <use href="#mark-tiktok" />
+                </svg></a>
+              <a class="platform-icon" data-social="linkedin" href="" target="_blank" rel="noopener"
+                aria-label="LinkedIn" hidden><svg class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+                  <use href="#mark-linkedin" />
+                </svg></a>
+            </div>
           </div>
         </div>
         <div class="hero-photo">
@@ -2598,12 +2841,54 @@
               rel="noopener">More on Siobhan's YouTube channel</a></p>
         </div>
         <div class="listen-row" id="listenRow">
-          <span class="lbl">Listen on:</span>
-          <a href="https://www.youtube.com/playlist?list=PLW4UfEVvEMTAxhL7HoX3i7swJek4o3p6j" class="platform-pill"
-            data-social="youtube" target="_blank" rel="noopener">YouTube</a>
+          <span class="lbl">Listen</span>
+          <a href="https://open.spotify.com/show/6zEBd39ZLkv2Br01n4gZGZ" class="platform-pill" data-social="spotify"
+            target="_blank" rel="noopener"><svg class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#mark-spotify" />
+            </svg>Spotify</a>
+          <a href="https://www.youtube.com/@PowerWithoutPermission" class="platform-pill" data-social="youtube"
+            target="_blank" rel="noopener"><svg class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#mark-youtube" />
+            </svg>YouTube</a>
+          <a href="" class="platform-pill" data-social="apple" target="_blank" rel="noopener" hidden><svg
+              class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#mark-apple" />
+            </svg>Apple Podcasts</a>
+          <span class="lbl lbl-split">Follow</span>
           <a href="https://www.instagram.com/siobhanfredaodonnell/" class="platform-pill" data-social="instagram"
-            target="_blank" rel="noopener">Instagram</a>
-          <a href="" class="platform-pill" data-social="spotify" target="_blank" rel="noopener" hidden>Spotify</a>
+            target="_blank" rel="noopener"><svg class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#mark-instagram" />
+            </svg>Instagram</a>
+          <a href="https://www.instagram.com/siobhanspodcast_pwp/" class="platform-pill" data-social="instagramPodcast"
+            target="_blank" rel="noopener"><svg class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#mark-instagram" />
+            </svg>Show Instagram</a>
+          <a href="https://www.facebook.com/siobhan.odonnell3/" class="platform-pill" data-social="facebook"
+            target="_blank" rel="noopener"><svg class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#mark-facebook" />
+            </svg>Facebook</a>
+          <a href="https://www.tiktok.com/@siobhanfredaodonn" class="platform-pill" data-social="tiktok" target="_blank"
+            rel="noopener"><svg class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#mark-tiktok" />
+            </svg>TikTok</a>
+          <a href="" class="platform-pill" data-social="linkedin" target="_blank" rel="noopener" hidden><svg
+              class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#mark-linkedin" />
+            </svg>LinkedIn</a>
+        </div>
+
+        <div class="ig-feed">
+          <div class="stamp-label" style="color:var(--stamp-red); margin-bottom:18px;">From her Instagram</div>
+          <p class="ig-lead">Recent posts from her page. <a href="https://www.instagram.com/siobhanfredaodonnell/"
+              target="_blank" rel="noopener">Follow @siobhanfredaodonnell</a> for what goes up next.</p>
+          <div class="ig-grid">
+            <iframe class="ig-frame" title="Recent Instagram post from Siobhan O'Donnell"
+              src="https://www.instagram.com/p/Dcfx5PSG-Zr/embed/captioned" loading="lazy"></iframe>
+            <iframe class="ig-frame" title="Instagram post from Siobhan O'Donnell with Lewis Huckstep"
+              src="https://www.instagram.com/p/DaMZbgss-ol/embed/captioned" loading="lazy"></iframe>
+            <iframe class="ig-frame" title="Instagram post from Siobhan O'Donnell with the panther artwork"
+              src="https://www.instagram.com/p/DaKIXWPR1bi/embed/captioned" loading="lazy"></iframe>
+          </div>
         </div>
 
         <div class="guest-gallery">
@@ -3022,13 +3307,44 @@
       <span>© 2026 Power Without Permission. All rights reserved.</span>
       <button type="button" class="copy-link" id="copyLink">Copy page link</button>
       <ul class="social-links" id="socialLinks">
-        <li><a href="https://www.instagram.com/siobhanfredaodonnell/" data-social="instagram" target="_blank"
-            rel="noopener">Instagram</a></li>
-        <li><a href="https://www.youtube.com/playlist?list=PLW4UfEVvEMTAxhL7HoX3i7swJek4o3p6j" data-social="youtube"
-            target="_blank" rel="noopener">YouTube</a></li>
-        <li><a href="" data-social="spotify" target="_blank" rel="noopener" hidden>Spotify</a></li>
-        <li><a href="" data-social="tiktok" target="_blank" rel="noopener" hidden>TikTok</a></li>
-        <li><a href="" data-social="linkedin" target="_blank" rel="noopener" hidden>LinkedIn</a></li>
+        <li><a class="platform-icon" href="https://open.spotify.com/show/6zEBd39ZLkv2Br01n4gZGZ" data-social="spotify"
+            target="_blank" rel="noopener" aria-label="Spotify"><svg class="platform-mark" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <use href="#mark-spotify" />
+            </svg></a></li>
+        <li><a class="platform-icon" href="https://www.youtube.com/@PowerWithoutPermission" data-social="youtube"
+            target="_blank" rel="noopener" aria-label="YouTube"><svg class="platform-mark" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <use href="#mark-youtube" />
+            </svg></a></li>
+        <li hidden><a class="platform-icon" href="" data-social="apple" target="_blank" rel="noopener"
+            aria-label="Apple Podcasts" hidden><svg class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#mark-apple" />
+            </svg></a></li>
+        <li><a class="platform-icon" href="https://www.instagram.com/siobhanfredaodonnell/" data-social="instagram"
+            target="_blank" rel="noopener" aria-label="Instagram"><svg class="platform-mark" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <use href="#mark-instagram" />
+            </svg></a></li>
+        <li><a class="platform-icon" href="https://www.instagram.com/siobhanspodcast_pwp/"
+            data-social="instagramPodcast" target="_blank" rel="noopener" aria-label="Podcast on Instagram"
+            title="The podcast on Instagram"><svg class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#mark-instagram" />
+            </svg></a></li>
+        <li><a class="platform-icon" href="https://www.facebook.com/siobhan.odonnell3/" data-social="facebook"
+            target="_blank" rel="noopener" aria-label="Facebook"><svg class="platform-mark" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <use href="#mark-facebook" />
+            </svg></a></li>
+        <li><a class="platform-icon" href="https://www.tiktok.com/@siobhanfredaodonn" data-social="tiktok"
+            target="_blank" rel="noopener" aria-label="TikTok"><svg class="platform-mark" viewBox="0 0 24 24"
+              aria-hidden="true">
+              <use href="#mark-tiktok" />
+            </svg></a></li>
+        <li hidden><a class="platform-icon" href="" data-social="linkedin" target="_blank" rel="noopener"
+            aria-label="LinkedIn" hidden><svg class="platform-mark" viewBox="0 0 24 24" aria-hidden="true">
+              <use href="#mark-linkedin" />
+            </svg></a></li>
       </ul>
     </div>
   </footer>

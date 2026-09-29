@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { doc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { SUPER_EMAIL, auth, db } from "./firebase-config.js";
-import { DEFAULT_CONTENT } from "./content.js";
+import { DEFAULT_CONTENT, mergeContent } from "./content.js";
 import { submitLead } from "./crm.js";
 
 function esc(value) {
@@ -72,11 +72,14 @@ function render(content) {
     const socials = content.socials || {};
     document.querySelectorAll("[data-social]").forEach((link) => {
         const href = socials[link.dataset.social];
+        const slot = link.parentElement && link.parentElement.tagName === "LI" ? link.parentElement : null;
         if (href) {
             link.href = href;
             link.hidden = false;
+            if (slot) slot.hidden = false;
         } else if (link.dataset.social) {
             link.hidden = true;
+            if (slot) slot.hidden = true;
         }
     });
 }
@@ -150,7 +153,7 @@ wireForms();
 watchAccount();
 
 onSnapshot(doc(db, "site", "content"), (snap) => {
-    if (snap.exists()) render({ ...DEFAULT_CONTENT, ...snap.data() });
+    if (snap.exists()) render(mergeContent(snap.data()));
 }, () => {
     /* The page already shows the published defaults. */
 });

@@ -13,7 +13,7 @@ import {
   updateDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 import { SUPER_EMAIL, auth, db, memberMakerAuth } from "./firebase-config.js";
-import { DEFAULT_CONTENT, LEAD_STATUSES, LEAD_TYPES } from "./content.js";
+import { DEFAULT_CONTENT, LEAD_STATUSES, LEAD_TYPES, mergeContent } from "./content.js";
 
 const appEl = document.getElementById("app");
 let tab = "pipeline";
@@ -199,11 +199,14 @@ function renderSite() {
       <section class="card">
         <h2>Links</h2>
         <div class="grid">
-          ${field("Instagram", draft.socials.instagram, "socials.instagram")}
-          ${field("YouTube", draft.socials.youtube, "socials.youtube")}
-          ${field("Spotify", draft.socials.spotify, "socials.spotify")}
-          ${field("TikTok", draft.socials.tiktok, "socials.tiktok")}
-          ${field("LinkedIn", draft.socials.linkedin, "socials.linkedin")}
+          ${field("Instagram", draft.socials.instagram || "", "socials.instagram")}
+          ${field("Show Instagram", draft.socials.instagramPodcast || "", "socials.instagramPodcast")}
+          ${field("YouTube", draft.socials.youtube || "", "socials.youtube")}
+          ${field("Spotify", draft.socials.spotify || "", "socials.spotify")}
+          ${field("Apple Podcasts", draft.socials.apple || "", "socials.apple")}
+          ${field("Facebook", draft.socials.facebook || "", "socials.facebook")}
+          ${field("TikTok", draft.socials.tiktok || "", "socials.tiktok")}
+          ${field("LinkedIn", draft.socials.linkedin || "", "socials.linkedin")}
         </div>
       </section>
       <section class="card">
@@ -378,9 +381,9 @@ onAuthStateChanged(auth, async (next) => {
   });
   onSnapshot(doc(db, "site", "content"), (snap) => {
     if (snap.exists() && tab !== "site") {
-      draft = { ...structuredClone(DEFAULT_CONTENT), ...snap.data() };
+      draft = mergeContent(snap.data());
     } else if (snap.exists() && !appEl.innerHTML) {
-      draft = { ...structuredClone(DEFAULT_CONTENT), ...snap.data() };
+      draft = mergeContent(snap.data());
     }
     if (!appEl.innerHTML) render();
   });

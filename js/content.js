@@ -6,9 +6,12 @@ export const DEFAULT_CONTENT = {
   ],
   socials: {
     instagram: "https://www.instagram.com/siobhanfredaodonnell/",
-    youtube: "https://www.youtube.com/playlist?list=PLW4UfEVvEMTAxhL7HoX3i7swJek4o3p6j",
-    spotify: "",
-    tiktok: "",
+    instagramPodcast: "https://www.instagram.com/siobhanspodcast_pwp/",
+    youtube: "https://www.youtube.com/@PowerWithoutPermission",
+    spotify: "https://open.spotify.com/show/6zEBd39ZLkv2Br01n4gZGZ",
+    facebook: "https://www.facebook.com/siobhan.odonnell3/",
+    tiktok: "https://www.tiktok.com/@siobhanfredaodonn",
+    apple: "",
     linkedin: "",
   },
   topics: [
@@ -68,6 +71,23 @@ export const DEFAULT_CONTENT = {
     ],
   },
 };
+
+const PREVIOUS_SOCIAL_DEFAULTS = {
+  youtube: "https://www.youtube.com/playlist?list=PLW4UfEVvEMTAxhL7HoX3i7swJek4o3p6j",
+};
+
+export function mergeContent(stored) {
+  const base = structuredClone(DEFAULT_CONTENT);
+  const data = stored || {};
+  const content = { ...base, ...data };
+  const socials = { ...base.socials, ...(data.socials || {}) };
+  for (const key of Object.keys(base.socials)) {
+    const value = String(socials[key] || "").trim();
+    socials[key] = !value || value === PREVIOUS_SOCIAL_DEFAULTS[key] ? base.socials[key] : value;
+  }
+  content.socials = socials;
+  return content;
+}
 
 export const LEAD_TYPES = {
   newsletter: "List",
