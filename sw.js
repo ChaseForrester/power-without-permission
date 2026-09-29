@@ -1,4 +1,4 @@
-var CACHE = "pwp-v1";
+var CACHE = "pwp-v2";
 var SHELL = ["/", "/favicon.svg", "/manifest.json", "/icons/icon-192.png", "/icons/icon-512.png", "/css/app.css", "/js/pwa.js"];
 
 self.addEventListener("install", function (event) {
