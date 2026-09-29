@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Log in — Power Without Permission</title>
+  <meta name="description" content="Members open the guide. The studio opens the CRM.">
+  <meta name="theme-color" content="#0a0908">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="PWP">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Space+Mono&family=Work+Sans:wght@400;600&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Space+Mono&family=Work+Sans:wght@400;600&family=Montserrat:wght@600&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/app.css">
 </head>
+
 <body>
   <main class="gate">
     <a class="brand" href="index.html">POWER WITHOUT PERMISSION</a>
@@ -19,7 +31,8 @@
         <label>Name<input name="name" autocomplete="name"></label>
       </div>
       <label>Email<input name="email" type="email" autocomplete="username" required></label>
-      <label>Password<input name="password" type="password" autocomplete="current-password" minlength="8" required></label>
+      <label>Password<input name="password" type="password" autocomplete="current-password" minlength="8"
+          required></label>
       <button type="submit">Enter</button>
       <p id="msg"></p>
     </form>
@@ -28,6 +41,8 @@
       <button type="button" class="linkish" id="reset">Reset password</button>
     </p>
   </main>
+  <script src="js/pwa.js"></script>
   <script type="module" src="js/login.js"></script>
 </body>
+
 </html>
