@@ -1,4 +1,5 @@
 .credentials
+images/_check/
 .firebase
 firebase-debug.log
 *-debug.log

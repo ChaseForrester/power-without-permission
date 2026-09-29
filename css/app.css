@@ -131,7 +131,7 @@ select {
   text-transform: none;
   letter-spacing: 0;
   font-family: "Work Sans", sans-serif;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 textarea {
@@ -279,6 +279,25 @@ tr.open td {
   padding-top: 8px;
 }
 
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.brand {
+  min-width: 0;
+  line-height: 1.2;
+}
+
+.top {
+  flex-wrap: wrap;
+  padding-top: max(22px, env(safe-area-inset-top));
+}
+
+body {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
 @media (max-width: 720px) {
 
   .top,
@@ -286,5 +305,28 @@ tr.open td {
   .tabs {
     padding-left: 16px;
     padding-right: 16px;
+  }
+
+  .top {
+    align-items: flex-start;
+  }
+
+  .tabs,
+  .actions,
+  .row {
+    flex-wrap: wrap;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .gate {
+    margin: 48px auto;
+  }
+
+  button,
+  .ghost {
+    min-height: 44px;
   }
 }
