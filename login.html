@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log in — Power Without Permission</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Space+Mono&family=Work+Sans:wght@400;600&family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <main class="gate">
+    <a class="brand" href="index.html">POWER WITHOUT PERMISSION</a>
+    <p class="kicker">Members and studio</p>
+    <h1 id="title">Log in</h1>
+    <p>Members open the guide. The studio opens the CRM.</p>
+    <form id="form">
+      <div id="nameWrap" hidden>
+        <label>Name<input name="name" autocomplete="name"></label>
+      </div>
+      <label>Email<input name="email" type="email" autocomplete="username" required></label>
+      <label>Password<input name="password" type="password" autocomplete="current-password" minlength="8" required></label>
+      <button type="submit">Enter</button>
+      <p id="msg"></p>
+    </form>
+    <p class="actions">
+      <button type="button" class="linkish" id="toggle">Need a login? Create one</button>
+      <button type="button" class="linkish" id="reset">Reset password</button>
+    </p>
+  </main>
+  <script type="module" src="js/login.js"></script>
+</body>
+</html>

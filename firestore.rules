@@ -1,0 +1,56 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() {
+      return request.auth != null;
+    }
+    function isSuper() {
+      return signedIn() && (
+        request.auth.token.email == "stormychaseforrester@gmail.com"
+        || exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+    function validLead() {
+      return request.resource.data.type in [
+          "newsletter", "guest", "speaking", "mentoring", "event", "testimonial", "member", "contact"
+        ]
+        && request.resource.data.email is string
+        && request.resource.data.email.size() > 3
+        && request.resource.data.email.size() < 200
+        && request.resource.data.status == "new"
+        && request.resource.data.message is string
+        && request.resource.data.message.size() < 4000;
+    }
+
+    match /admins/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isSuper());
+      allow create, update: if isSuper() && request.auth.uid == uid;
+      allow delete: if false;
+    }
+
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isSuper());
+      allow create: if (isSuper() && request.auth.uid == uid)
+        || (signedIn() && request.auth.uid == uid && request.resource.data.role == "member")
+        || (isSuper() && request.resource.data.role == "member");
+      allow update: if isSuper()
+        || (signedIn()
+          && request.auth.uid == uid
+          && request.resource.data.role == resource.data.role
+          && resource.data.role == "member");
+      allow delete: if false;
+    }
+
+    match /leads/{id} {
+      allow create: if validLead();
+      allow read: if isSuper()
+        || (signedIn() && resource.data.email == request.auth.token.email);
+      allow update, delete: if isSuper();
+    }
+
+    match /site/{id} {
+      allow read: if true;
+      allow write: if isSuper();
+    }
+  }
+}

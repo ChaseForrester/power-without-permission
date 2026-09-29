@@ -1,0 +1,290 @@
+:root {
+  --ink: #0a0908;
+  --ink-soft: #161113;
+  --paper: #f6eef1;
+  --bone: #f5f0e3;
+  --stamp: #cd5f92;
+  --gold: #c9a227;
+  --line: rgba(245, 240, 227, 0.16);
+  --charcoal: #211019;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: "Work Sans", sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  padding: 18px 28px 0;
+}
+
+.tabs button,
+.ghost,
+button {
+  background: var(--stamp);
+  color: var(--bone);
+  border: 0;
+  border-radius: 2px;
+  padding: 11px 16px;
+  cursor: pointer;
+  font-family: Montserrat, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tabs button,
+.ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+}
+
+.tabs button.on {
+  border-color: var(--stamp);
+  color: var(--stamp);
+}
+
+main {
+  padding: 22px 28px 64px;
+}
+
+.gate {
+  max-width: 460px;
+  margin: 10vh auto;
+  padding: 0 20px;
+}
+
+h1,
+.gate h1,
+h2 {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.kicker,
+.sub,
+.quiet {
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  opacity: 0.72;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 14px 0;
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+input,
+textarea,
+select {
+  background: var(--ink-soft);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 12px 14px;
+  text-transform: none;
+  letter-spacing: 0;
+  font-family: "Work Sans", sans-serif;
+  font-size: 15px;
+}
+
+textarea {
+  width: 100%;
+}
+
+.card,
+.detail-card {
+  background: var(--ink-soft);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 22px;
+  margin-bottom: 18px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.chip b {
+  margin-left: 6px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+th {
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+tr[data-open] {
+  cursor: pointer;
+}
+
+tr.open td {
+  color: var(--gold);
+}
+
+.status {
+  text-transform: uppercase;
+  font-family: "Space Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.status.new {
+  color: var(--gold);
+}
+
+.status.won {
+  color: #9ddeaf;
+}
+
+.status.lost {
+  opacity: 0.45;
+}
+
+.row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.sheet {
+  padding-left: 18px;
+}
+
+.sheet li {
+  margin: 0 0 18px;
+}
+
+.sheet strong {
+  display: block;
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.lead-list {
+  list-style: none;
+  padding: 0;
+}
+
+.lead-list li {
+  display: grid;
+  gap: 4px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.actions {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.linkish {
+  background: none;
+  border: 0;
+  color: var(--gold);
+  padding: 0;
+  letter-spacing: 0.04em;
+}
+
+#msg,
+#memberMsg,
+#siteMsg {
+  min-height: 1.2em;
+  color: var(--gold);
+  font-family: "Space Mono", monospace;
+  font-size: 12px;
+}
+
+.block {
+  border-top: 1px solid var(--line);
+  margin-top: 12px;
+  padding-top: 8px;
+}
+
+@media (max-width: 720px) {
+
+  .top,
+  main,
+  .tabs {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

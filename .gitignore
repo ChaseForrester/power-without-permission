@@ -1,0 +1,5 @@
+.credentials
+.firebase
+firebase-debug.log
+*-debug.log
+.DS_Store
