@@ -1,0 +1,1 @@
+# Power without permission
