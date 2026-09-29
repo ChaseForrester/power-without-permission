@@ -282,6 +282,27 @@
     openLightbox(img);
   });
 
+  var stage = document.querySelector(".video-stage");
+
+  function playVideo(id, title) {
+    if (!stage || !id) return;
+    var frame = document.createElement("iframe");
+    frame.src = "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(id) + "?rel=0&autoplay=1";
+    frame.title = title || "Power Without Permission";
+    frame.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+    frame.allowFullscreen = true;
+    stage.replaceChildren(frame);
+  }
+
+  document.querySelectorAll(".video-play, .video-pick").forEach(function (button) {
+    button.addEventListener("click", function () {
+      document.querySelectorAll(".video-pick").forEach(function (pick) {
+        pick.classList.toggle("is-on", pick === button || pick.dataset.video === button.dataset.video);
+      });
+      playVideo(button.dataset.video, button.dataset.title);
+    });
+  });
+
   document.querySelectorAll(".faq-list summary").forEach(function (summary) {
     summary.addEventListener("click", function () {
       var item = summary.parentElement;
@@ -326,14 +347,22 @@
     var height = document.documentElement.scrollHeight - window.innerHeight;
     if (header) header.classList.toggle("is-scrolled", y > 12);
     if (progress) progress.style.transform = "scaleX(" + (height > 0 ? y / height : 0) + ")";
-    top.classList.toggle("is-on", y > 700);
+    var blocking = false;
+    if (phone.matches) {
+      var zone = window.innerHeight - 96;
+      document.querySelectorAll("form button, form .btn").forEach(function (el) {
+        var rect = el.getBoundingClientRect();
+        if (rect.width > 0 && rect.bottom > zone && rect.top < window.innerHeight) blocking = true;
+      });
+    }
+    top.classList.toggle("is-on", y > 700 && !blocking);
     var heroBox = document.querySelector(".hero");
     var pastHero = !heroBox || heroBox.getBoundingClientRect().bottom < 140;
     var workBox = work ? work.getBoundingClientRect() : null;
     var footBox = footer ? footer.getBoundingClientRect() : null;
     var overWork = workBox && workBox.top < window.innerHeight * 0.72 && workBox.bottom > 80;
     var overEnd = footBox && footBox.top < window.innerHeight * 0.8;
-    var showDock = phone.matches && pastHero && !overWork && !overEnd;
+    var showDock = phone.matches && pastHero && !overWork && !overEnd && !blocking;
     dock.classList.toggle("is-on", showDock);
     document.body.classList.toggle("has-dock", showDock);
   }

@@ -254,6 +254,10 @@
       align-items: center;
     }
 
+    .hero-grid>div {
+      min-width: 0;
+    }
+
     @media(max-width:900px) {
       .hero-grid {
         grid-template-columns: 1fr;
@@ -700,17 +704,20 @@
       border-radius: 6px;
       background: var(--ink-soft);
       border: 1px solid var(--line);
+      color: var(--bone);
     }
 
     .guest-form-card h3 {
       font-size: 24px;
       margin-bottom: 12px;
+      color: var(--bone);
     }
 
     .guest-form-card p {
       font-size: 14.5px;
       line-height: 1.65;
-      opacity: .75;
+      color: var(--bone);
+      opacity: .86;
       max-width: 60ch;
       margin: 0 0 30px;
     }
@@ -743,13 +750,14 @@
       font-size: 11.5px;
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      opacity: .65;
+      color: var(--bone);
+      opacity: .88;
     }
 
     .guest-form-field input,
     .guest-form-field textarea {
       background: var(--ink);
-      border: 1px solid var(--line);
+      border: 1px solid rgba(245, 240, 227, 0.42);
       color: var(--bone);
       font-family: 'Work Sans', sans-serif;
       font-size: 16px;
@@ -2103,6 +2111,250 @@
         gap: 8px;
       }
     }
+
+    .spark-line {
+      position: relative;
+    }
+
+    .spark-word {
+      display: block;
+      animation: word-rise 0.9s ease both;
+    }
+
+    .spark-word:nth-child(2) {
+      animation-delay: 0.16s;
+    }
+
+    .spark-word:nth-child(3) {
+      animation-delay: 0.32s;
+    }
+
+    .sparkle {
+      position: absolute;
+      color: var(--gold);
+      font-style: normal;
+      font-size: 16px;
+      line-height: 1;
+      pointer-events: none;
+      animation: spark-pop 1.8s ease both;
+    }
+
+    .sparkle.s1 {
+      top: 6%;
+      left: 46%;
+    }
+
+    .sparkle.s2 {
+      top: 48%;
+      left: -2%;
+      font-size: 11px;
+      animation-delay: 0.35s;
+    }
+
+    .sparkle.s3 {
+      top: 78%;
+      right: 4%;
+      animation-delay: 0.55s;
+    }
+
+    .sparkle.s4 {
+      top: 12%;
+      right: 8%;
+      font-size: 12px;
+      animation-delay: 0.8s;
+    }
+
+    @keyframes word-rise {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes spark-pop {
+      0% {
+        opacity: 0;
+        transform: scale(0.2) translateY(6px);
+      }
+
+      30% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(0.7) translateY(-16px);
+      }
+    }
+
+    .glint {
+      background-image: linear-gradient(110deg, currentColor 0%, currentColor 38%, #f3e2a2 50%, currentColor 62%, currentColor 100%);
+      background-size: 220% 100%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glint 5s ease-in-out infinite;
+    }
+
+    .script.glint {
+      background-image: linear-gradient(110deg, #c9a227 0%, #c9a227 36%, #fff6cf 50%, #c9a227 64%, #c9a227 100%);
+    }
+
+    @keyframes glint {
+
+      0%,
+      100% {
+        background-position: 100% 50%;
+      }
+
+      50% {
+        background-position: 0% 50%;
+      }
+    }
+
+    .sway-wrap {
+      overflow: hidden;
+      margin: 28px 0 8px;
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+
+    .sway-track {
+      display: flex;
+      gap: 22px;
+      width: max-content;
+      animation: sway 18s ease-in-out infinite;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    @keyframes sway {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      50% {
+        transform: translateX(-42%);
+      }
+    }
+
+    .channel {
+      margin-top: 48px;
+    }
+
+    .video-stage {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .video-stage iframe,
+    .video-play,
+    .video-play img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .video-play {
+      padding: 0;
+      background: #000;
+      cursor: pointer;
+    }
+
+    .video-play img {
+      object-fit: cover;
+    }
+
+    .video-play span,
+    .video-pick {
+      font-family: 'Montserrat', sans-serif;
+    }
+
+    .video-play span {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--stamp-red);
+      color: var(--bone);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 12px 22px;
+      border-radius: 2px;
+    }
+
+    .video-row {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      margin-top: 14px;
+      padding-bottom: 6px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .video-pick {
+      flex: 0 0 210px;
+      scroll-snap-align: start;
+      background: var(--ink-soft);
+      color: var(--bone);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 0 0 12px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .video-pick img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-pick span {
+      display: block;
+      padding: 10px 12px 0;
+      font-family: 'Work Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.35;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .video-pick.is-on {
+      border-color: var(--stamp-red);
+    }
+
+    .channel-note {
+      margin: 14px 0 0;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .channel-note a {
+      color: var(--gold);
+    }
   </style>
 </head>
 
@@ -2152,10 +2404,29 @@
       <div class="wrap hero-grid">
         <div>
           <div class="stamp-label hero-eyebrow">Power Without Permission Podcast</div>
-          <h1>Move like a panther.<br>Lead like <span class="script" style="font-size:0.85em;">no one</span><br>gave you
-            permission.</h1>
+          <h1 class="spark-line">
+            <span class="spark-word">Move like a panther.</span>
+            <span class="spark-word">Lead like <span class="script glint">no one</span></span>
+            <span class="spark-word">gave you permission.</span>
+            <i class="sparkle s1" aria-hidden="true">✦</i>
+            <i class="sparkle s2" aria-hidden="true">✦</i>
+            <i class="sparkle s3" aria-hidden="true">✦</i>
+            <i class="sparkle s4" aria-hidden="true">✦</i>
+          </h1>
           <p class="lede">Podcast host, speaker, and mentor helping business owners and personal brands build consistent
             10K months — without waiting for anyone's approval.</p>
+          <div class="sway-wrap" aria-hidden="true">
+            <div class="sway-track">
+              <span>Move like a panther</span><span>✦</span>
+              <span>No permission needed</span><span>✦</span>
+              <span>10K months</span><span>✦</span>
+              <span>On your terms</span><span>✦</span>
+              <span>Move like a panther</span><span>✦</span>
+              <span>No permission needed</span><span>✦</span>
+              <span>10K months</span><span>✦</span>
+              <span>On your terms</span><span>✦</span>
+            </div>
+          </div>
           <div class="btn-row">
             <a href="#work-with-me" class="btn btn-solid">Work With Me →</a>
             <a href="#podcast" class="btn btn-ghost">Listen to the Podcast</a>
@@ -2243,6 +2514,46 @@
             <a href="https://www.youtube.com/watch?v=n8-O35En_oU" class="ep-play" target="_blank" rel="noopener">▸
               Listen now</a>
           </div>
+        </div>
+        <div class="channel">
+          <div class="stamp-label" style="color:var(--stamp-red); margin-bottom:18px;">From the channel</div>
+          <div class="video-stage">
+            <button type="button" class="video-play" data-video="kqPEhqxCMkM"
+              data-title="Permissionless Growth: the Playbook for real Success - with Jessica Williamson">
+              <img src="https://i.ytimg.com/vi/kqPEhqxCMkM/hqdefault.jpg"
+                alt="Play Permissionless Growth with Jessica Williamson">
+              <span>Play</span>
+            </button>
+          </div>
+          <div class="video-row">
+            <button type="button" class="video-pick is-on" data-video="kqPEhqxCMkM"
+              data-title="Permissionless Growth: the Playbook for real Success - with Jessica Williamson">
+              <img src="https://i.ytimg.com/vi/kqPEhqxCMkM/hqdefault.jpg" alt="" loading="lazy" decoding="async">
+              <span>Permissionless Growth — Jessica Williamson</span>
+            </button>
+            <button type="button" class="video-pick" data-video="Z_x7LdN9cyw"
+              data-title="The Pilates Gang Effect with Perry Howell">
+              <img src="https://i.ytimg.com/vi/Z_x7LdN9cyw/hqdefault.jpg" alt="" loading="lazy" decoding="async">
+              <span>The Pilates Gang Effect — Perry Howell</span>
+            </button>
+            <button type="button" class="video-pick" data-video="n8-O35En_oU"
+              data-title="Her Story. Her Stand. Women's Visibility, Voice and Leadership with Michelle Faye">
+              <img src="https://i.ytimg.com/vi/n8-O35En_oU/hqdefault.jpg" alt="" loading="lazy" decoding="async">
+              <span>Her Story. Her Stand. — Michelle Faye</span>
+            </button>
+            <button type="button" class="video-pick" data-video="MGrcQtPbuag"
+              data-title="Jordie White – From Gloves to Grit – The Fierce Fit Movement">
+              <img src="https://i.ytimg.com/vi/MGrcQtPbuag/hqdefault.jpg" alt="" loading="lazy" decoding="async">
+              <span>From Gloves to Grit — Jordie White</span>
+            </button>
+            <button type="button" class="video-pick" data-video="Wk8-coFcrsw"
+              data-title="No Excuses, No permission given, Chris Allchin's rise to million dollar empires">
+              <img src="https://i.ytimg.com/vi/Wk8-coFcrsw/hqdefault.jpg" alt="" loading="lazy" decoding="async">
+              <span>No Excuses, No Permission — Chris Allchin</span>
+            </button>
+          </div>
+          <p class="channel-note"><a href="https://www.youtube.com/@PowerWithoutPermission" target="_blank"
+              rel="noopener">More on Siobhan's YouTube channel</a></p>
         </div>
         <div class="listen-row" id="listenRow">
           <span class="lbl">Listen on:</span>
@@ -2643,7 +2954,7 @@
         <div class="perforation" style="margin-bottom:70px;"><span class="perforation-star">✦</span></div>
         <div class="stub-inner">
           <div class="stamp-label" style="color:var(--stamp-red);">[ YOUR TURN ]</div>
-          <h2 style="margin-top:18px;">Grant yourself permission.</h2>
+          <h2 class="glint" style="margin-top:18px;">Grant yourself permission.</h2>
           <p>Whether it's the podcast, a stage, or a seat in the mentorship — start here.</p>
           <div class="btn-row" style="justify-content:center;">
             <a href="#work-with-me" class="btn btn-solid">Work With Me</a>
