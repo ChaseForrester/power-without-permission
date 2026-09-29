@@ -102,13 +102,13 @@
         return;
       }
       var line = markLines[markIndex];
-      var duration = Math.round(Math.max(1100, line.chars * 82));
+      var duration = Math.round(Math.max(790, line.chars * 59));
       markIndex += 1;
       line.bar.style.transitionDuration = duration + "ms";
       line.words.forEach(function (word) { word.classList.add("is-lit"); });
       void line.bar.offsetWidth;
       line.bar.classList.add("is-lit");
-      markTimer = window.setTimeout(readNextLine, duration + 380);
+      markTimer = window.setTimeout(readNextLine, duration + 270);
     }
 
     function startReading() {
