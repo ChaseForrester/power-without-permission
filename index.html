@@ -396,11 +396,14 @@
       pointer-events: none;
     }
 
-    .hero-photo-frame img {
+    .hero-photo-frame img,
+    .hero-photo-frame video {
       width: 100%;
       height: 100%;
       object-fit: contain;
       object-position: center;
+      display: block;
+      background: #0a0908;
     }
 
     .hero-byline {
@@ -2628,7 +2631,8 @@
         <div class="hero-photo">
           <div class="glow"></div>
           <div class="hero-photo-frame">
-            <img src="images/hero-cover.jpg" alt="Siobhan O'Donnell with a black panther" decoding="async">
+            <video src="videos/hero.mp4" poster="images/hero-video-poster.jpg" autoplay muted loop playsinline
+              preload="auto" aria-label="Siobhan O'Donnell, host of Power Without Permission"></video>
           </div>
           <div class="hero-byline">Hosted by <span class="script">Siobhan O'Donnell</span></div>
         </div>

@@ -12,6 +12,19 @@
   var lastFocus = null;
   var toastTimer = 0;
 
+  var heroVideo = document.querySelector(".hero-photo-frame video");
+  if (heroVideo) {
+    heroVideo.muted = true;
+    heroVideo.playsInline = true;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      heroVideo.removeAttribute("autoplay");
+      heroVideo.pause();
+    } else {
+      var heroPlay = heroVideo.play();
+      if (heroPlay && heroPlay.catch) heroPlay.catch(function () { });
+    }
+  }
+
   var navLinks = Array.prototype.slice.call(
     document.querySelectorAll(".nav-links a[href^='#']:not(.nav-cta)")
   );
