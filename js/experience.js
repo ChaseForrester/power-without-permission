@@ -25,6 +25,13 @@
     }
   }
 
+  var sparkLine = document.querySelector(".spark-line");
+  if (sparkLine && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var armSpark = function () { sparkLine.classList.add("is-live"); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(armSpark);
+    else armSpark();
+  }
+
   var markStory = document.querySelector(".mark-story");
   if (markStory) {
     markStory.querySelectorAll("p").forEach(function (para) {

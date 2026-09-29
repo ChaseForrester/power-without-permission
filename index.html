@@ -2310,25 +2310,71 @@
     }
 
     .spark-word:nth-child(2) {
-      animation-delay: 0.12s;
-    }
-
-    .spark-word:nth-child(3) {
-      animation-delay: 0.24s;
+      animation-delay: 0.28s;
     }
 
     .spark-word:nth-child(4) {
-      animation-delay: 0.36s;
+      animation-delay: 2.2s;
     }
 
     .spark-word.script-line {
-      line-height: 1.05;
-      margin: -0.06em 0 0.02em;
+      line-height: 0.95;
+      margin: -0.32em 0 -0.08em;
       white-space: nowrap;
+      animation: none;
     }
 
-    .spark-word.script-line .script {
-      font-size: 1.22em;
+    .handwrite-wrap {
+      position: relative;
+      display: inline-block;
+      max-width: 100%;
+    }
+
+    .handwrite {
+      display: block;
+      line-height: 0.86;
+      font-size: calc(1.22em * 1.4);
+      background-position: 100% 50%;
+      -webkit-mask-image: linear-gradient(90deg, #000 46%, transparent 52%);
+      mask-image: linear-gradient(90deg, #000 46%, transparent 52%);
+      -webkit-mask-size: 300% 100%;
+      mask-size: 300% 100%;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+      -webkit-mask-position: 0 0;
+      mask-position: 0 0;
+    }
+
+    .ink-pen {
+      position: absolute;
+      left: 0;
+      top: 58%;
+      width: 0.16em;
+      height: 0.16em;
+      margin: -0.08em 0 0 -0.08em;
+      border-radius: 50%;
+      background: #fff6cf;
+      box-shadow: 0 0 0 0.07em rgba(201, 162, 39, 0.55), 0 0 14px #c9a227;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      html.js .spark-line:not(.is-live) .spark-word {
+        animation: none;
+        opacity: 0;
+      }
+
+      html.js .spark-line.is-live .handwrite {
+        animation:
+          hand-write 1.6s cubic-bezier(.33, .05, .2, 1) 0.62s both,
+          hand-grow 0.72s cubic-bezier(.16, .8, .24, 1) 2.28s both,
+          glint 5.5s ease-in-out 3.1s infinite;
+      }
+
+      html.js .spark-line.is-live .ink-pen {
+        animation: pen-travel 1.6s cubic-bezier(.33, .05, .2, 1) 0.62s both;
+      }
     }
 
     .sparkle {
@@ -2369,12 +2415,54 @@
     @keyframes word-rise {
       from {
         opacity: 0;
-        transform: translateY(16px);
+        transform: translateY(22px);
       }
 
       to {
         opacity: 1;
         transform: none;
+      }
+    }
+
+    @keyframes hand-write {
+      from {
+        -webkit-mask-position: 100% 0;
+        mask-position: 100% 0;
+      }
+
+      to {
+        -webkit-mask-position: 0 0;
+        mask-position: 0 0;
+      }
+    }
+
+    @keyframes hand-grow {
+      from {
+        font-size: 1.22em;
+      }
+
+      to {
+        font-size: calc(1.22em * 1.4);
+      }
+    }
+
+    @keyframes pen-travel {
+      0% {
+        left: 0;
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+      }
+
+      88% {
+        opacity: 1;
+      }
+
+      100% {
+        left: 100%;
+        opacity: 0;
       }
     }
 
@@ -2609,7 +2697,7 @@
           <h1 class="spark-line">
             <span class="spark-word">Move like a panther.</span>
             <span class="spark-word">Lead like</span>
-            <span class="spark-word script-line"><span class="script glint">no one</span></span>
+            <span class="spark-word script-line"><span class="handwrite-wrap"><span class="script glint handwrite">no one</span><i class="ink-pen" aria-hidden="true"></i></span></span>
             <span class="spark-word">gave you permission.</span>
             <i class="sparkle s1" aria-hidden="true">✦</i>
             <i class="sparkle s2" aria-hidden="true">✦</i>
